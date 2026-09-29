@@ -17,6 +17,15 @@ a{color:var(--gold2);text-decoration:none}
 button{font:inherit;cursor:pointer}
 .top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .top h1{font-size:15px;margin:0;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--gold)}
+.top .brand img{height:40px;width:auto;display:block}
+/* hero video */
+.hero{position:relative;background:#fff;margin:-16px -16px 16px;overflow:hidden}
+.hero video{display:block;width:100%;height:auto;max-height:70vh;object-fit:cover;background:#fff}
+.hero .lock{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#fff;opacity:0;transition:opacity .6s;pointer-events:none}
+.hero .lock img{width:min(46vw,420px);height:auto}
+.hero.locked .lock{opacity:1}
+.hero .mute{position:absolute;right:12px;bottom:12px;background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:14px;padding:4px 10px;font-size:12px;color:var(--muted);display:none}
+@media (max-width:700px){.hero video{max-height:56vw}}
 .top .who{color:var(--muted);font-size:13px;margin-left:auto}
 .top .nav a{margin-right:14px;font-size:13px}
 .wrap{padding:16px;max-width:1600px;margin:0 auto}
@@ -106,6 +115,9 @@ th.starred .lbl{color:var(--gold2)} th.struck .lbl{color:var(--red2);text-decora
 .rev table{border-collapse:collapse;width:100%;font-size:13px}
 .rev td,.rev th{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left}
 .rev input{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:6px 10px;font:inherit}
+.linkrow{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.linkrow .linkbox{width:300px;max-width:60vw;font-size:12px;padding:5px 8px}
+.linkrow .btn{padding:5px 10px;font-size:12px;text-decoration:none}
 .btn{background:var(--gold);color:#1c1915;border:none;border-radius:8px;padding:7px 12px;font-weight:600}
 .btn.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--line);font-weight:500}
 .rgrid{display:grid;grid-template-columns:150px repeat(var(--ncol),minmax(78px,1fr));gap:4px;font-size:12px;align-items:stretch}
@@ -163,7 +175,7 @@ th.starred .lbl{color:var(--gold2)} th.struck .lbl{color:var(--red2);text-decora
 </head>
 <body>
 <div class="top">
-  <h1>Alfares Watch Review</h1>
+  <a href="#/" class="brand"><img src="assets/logo.png" alt="Alfares Jewellery"></a><h1>Watch Review</h1>
   <span class="nav" id="nav"></span>
   <span class="who" id="who"></span>
 </div>
@@ -174,6 +186,7 @@ th.starred .lbl{color:var(--gold2)} th.struck .lbl{color:var(--red2);text-decora
 const SB='https://kdcusvfpykigkmyqwbvg.supabase.co';
 const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtkY3VzdmZweWtpZ2tteXF3YnZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2MzcwOTUsImV4cCI6MjEwNjIxMzA5NX0.zkL31ox2HCvWBBo2RFJmkEKJ2S3XUlpT8NWFbHJvDCc';
 const IMG=SB+'/storage/v1/object/public/catalogue/img/';
+const HERO='assets/hero.mp4'; // set to '' to hide the banner
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let TOKEN=null, ME=null, MAN=null, MARKS=new Map(), ALL=null, REVIEWERS=null, COMMENTS=[], ALLC=[];
@@ -302,7 +315,7 @@ function wireComments(box,ckey,cellId){
 
 /* ---------- index ---------- */
 function renderIndex(){
-  let h='<div class="legend"><span>Tap a collection to open its strap × colour grid.</span><span><b>★</b> star = winner</span><span><b>✕</b> cross = loser</span><span>Leave anything blank to stay undecided.</span></div><div class="cards">';
+  let h=(HERO?'<div class="hero" id="hero"><video autoplay muted loop playsinline preload="metadata"><source src="'+HERO+'" type="video/mp4"></video><div class="lock"><img src="assets/logo.png" alt="Alfares Jewellery"></div></div>':'')+'<div class="legend"><span>Tap a collection to open its strap × colour grid.</span><span><b>★</b> star = winner</span><span><b>✕</b> cross = loser</span><span>Leave anything blank to stay undecided.</span></div><div class="cards">';
   for(const c of MAN.collections){
     const cm=getMark(c.key,'collection',''); const k=counts(c.key);
     const cover=c.cells[0]?IMG+c.key+'/'+c.cells[0].id+'/product.webp':'';
@@ -313,6 +326,13 @@ function renderIndex(){
   h+='</div>'+commentsBox('gcomments','','','General comments','Anything about the range as a whole — what is missing, what to drop, how it compares. Only you and Khaled see your comments.');
   $('#app').innerHTML=h;
   wireComments($('#gcomments'),'','');
+  wireHero();
+}
+function wireHero(){
+  const hero=$('#hero'); if(!hero) return; const v=hero.querySelector('video');
+  v.addEventListener('timeupdate',()=>{ if(!v.duration) return; hero.classList.toggle('locked', v.duration-v.currentTime<2.4); });
+  v.addEventListener('seeking',()=>hero.classList.remove('locked'));
+  v.play().catch(()=>{});
 }
 
 /* ---------- collection grid ---------- */
@@ -414,15 +434,21 @@ async function renderResults(){
   for(const m of ALL){ if(!per.has(m.reviewer_token)) per.set(m.reviewer_token,new Map()); per.get(m.reviewer_token).set(mkey(m.collection,m.scope,m.target),m) }
   const base=location.origin+location.pathname;
   let h='<div class="rev"><h3 style="margin:0 0 8px">Reviewers</h3><table><tr><th>Name</th><th>Marks</th><th>Last activity</th><th>Link</th></tr>';
-  for(const r of REVIEWERS){h+='<tr><td>'+esc(r.name)+(r.is_admin?' <span class="saving">(admin)</span>':'')+'</td><td>'+r.mark_count+' · '+ALLC.filter(c=>c.reviewer_token===r.token).length+' comments</td><td>'+(r.last_activity?new Date(r.last_activity).toLocaleString():'—')+'</td><td><button class="btn ghost copy" data-link="'+esc(base+'?r='+r.token)+'">Copy link</button></td></tr>'}
+  for(const r of REVIEWERS){h+='<tr><td>'+esc(r.name)+(r.is_admin?' <span class="saving">(admin)</span>':'')+'</td><td>'+r.mark_count+' · '+ALLC.filter(c=>c.reviewer_token===r.token).length+' comments</td><td>'+(r.last_activity?new Date(r.last_activity).toLocaleString():'—')+'</td><td><div class="linkrow"><input class="linkbox" readonly value="'+esc(base+'?r='+r.token)+'"><button class="btn ghost copy" data-link="'+esc(base+'?r='+r.token)+'">Copy</button><a class="btn ghost wa" target="_blank" rel="noopener" href="https://wa.me/?text='+encodeURIComponent('Alfares watch review — your personal link ('+r.name+'): '+base+'?r='+r.token)+'">WhatsApp</a></div></td></tr>'}
   h+='</table><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><input id="newname" placeholder="New reviewer name"><button class="btn" id="addrev">Create link</button><button class="btn ghost" id="csv">Download CSV</button></div></div>';
   h+='<div class="tabs"><button data-t="summary"'+(RTAB==='summary'?' class="on"':'')+'>Summary</button>';
   for(const c of MAN.collections) h+='<button data-t="'+esc(c.key)+'"'+(RTAB===c.key?' class="on"':'')+'>#'+c.rank+' '+esc(c.name)+'</button>';
   h+='</div><div id="rbody"></div>';
   $('#app').innerHTML=h;
   $('#app').querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{RTAB=b.dataset.t;$('#app').querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));paintResults(per)});
-  $('#app').querySelectorAll('.copy').forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.link);toast('Link copied')}catch{prompt('Copy this link:',b.dataset.link)}});
-  $('#addrev').onclick=async()=>{const n=$('#newname').value.trim();if(!n)return;try{const t=await rpc('add_reviewer',{p_admin:TOKEN,p_name:n});toast('Created');renderResults();setTimeout(()=>{try{navigator.clipboard.writeText(base+'?r='+t)}catch{}},300)}catch(e){toast('Could not create')}};
+  $('#app').querySelectorAll('.copy').forEach(b=>b.onclick=async()=>{
+    const box=b.parentElement.querySelector('.linkbox'); let ok=false;
+    try{await navigator.clipboard.writeText(b.dataset.link);ok=true}catch(e){}
+    if(!ok){try{box.focus();box.select();box.setSelectionRange(0,99999);ok=document.execCommand('copy')}catch(e){}}
+    if(ok){toast('Link copied');b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1500)} else {box.focus();box.select();toast('Select the link and copy it (⌘C)')}
+  });
+  $('#app').querySelectorAll('.linkbox').forEach(i=>i.onclick=()=>{i.select();i.setSelectionRange(0,99999)});
+  $('#addrev').onclick=async()=>{const n=$('#newname').value.trim();if(!n)return;try{const t=await rpc('add_reviewer',{p_admin:TOKEN,p_name:n});toast('Created');renderResults()}catch(e){toast('Could not create')}};
   $('#csv').onclick=()=>downloadCsv(per);
   paintResults(per);
 }
