@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Alfares Watch Review</title>
+<style>
+:root{
+  --bg:#0f0e0c; --panel:#171512; --panel2:#1f1c18; --line:#2a2622; --text:#efe9dd; --muted:#a39a8b;
+  --gold:#d6b35a; --gold2:#f1d78a; --red:#e0574f; --red2:#ff8a80; --green:#8fc98f;
+  --cell:150px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--gold2);text-decoration:none}
+button{font:inherit;cursor:pointer}
+.top{position:sticky;top:0;z-index:20;background:rgba(15,14,12,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.top h1{font-size:15px;margin:0;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--gold)}
+.top .who{color:var(--muted);font-size:13px;margin-left:auto}
+.top .nav a{margin-right:14px;font-size:13px}
+.wrap{padding:16px;max-width:1600px;margin:0 auto}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:6px 0 16px}
+.legend b{color:var(--text);font-weight:500}
+.mk{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:14px;border:1px solid var(--line);background:var(--panel2);color:var(--muted);font-size:15px;line-height:1;padding:0;transition:transform .08s}
+.mk:hover{transform:scale(1.12);color:var(--text)}
+.mk.star.on{background:var(--gold);border-color:var(--gold);color:#221b05}
+.mk.strike.on{background:var(--red);border-color:var(--red);color:#fff}
+.mk.small{width:24px;height:24px;font-size:13px}
+.mkgroup{display:inline-flex;gap:4px}
+/* index cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.card .img{aspect-ratio:1006/1564;background:#000;display:block;width:100%;object-fit:cover}
+.card .body{padding:10px 12px 12px}
+.card .rank{font-size:12px;color:var(--muted)}
+.card .name{font-weight:600;font-size:15px;margin:2px 0}
+.card .metal{color:var(--muted);font-size:13px}
+.card .foot{display:flex;align-items:center;justify-content:space-between;margin-top:8px;gap:8px}
+.card .stat{font-size:12px;color:var(--muted)}
+.card.starred{border-color:var(--gold)}
+.card.struck{border-color:var(--red);opacity:.75}
+.card.struck .img{filter:grayscale(.7)}
+.badge{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.6);border-radius:8px;padding:2px 8px;font-size:12px;color:var(--gold2)}
+/* collection page */
+.chead{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:10px}
+.chead h2{margin:0;font-size:22px;font-weight:600}
+.chead .sub{color:var(--muted);font-size:13px;margin-top:2px}
+.chead .cmark{display:flex;align-items:center;gap:8px;margin-left:auto}
+.note{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:8px 10px;font:inherit;width:100%;min-height:38px;resize:vertical}
+.gridwrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+table.grid{border-collapse:separate;border-spacing:0;min-width:100%}
+table.grid th,table.grid td{padding:6px;vertical-align:top}
+table.grid thead th{position:sticky;top:0;background:var(--panel);z-index:5;border-bottom:1px solid var(--line);text-align:center;font-weight:500;font-size:13px}
+table.grid thead th.corner{left:0;z-index:7}
+table.grid th.rowh{position:sticky;left:0;background:var(--panel);z-index:4;text-align:left;font-weight:500;font-size:13px;width:150px;min-width:150px;border-right:1px solid var(--line)}
+table.grid th .lbl{display:block;margin-bottom:6px}
+table.grid th.rowh .lbl{max-width:140px}
+table.grid th .cnt{display:block;color:var(--muted);font-size:11px;font-weight:400;margin-top:4px}
+th.starred .lbl{color:var(--gold2)} th.struck .lbl{color:var(--red2);text-decoration:line-through}
+.cell{width:var(--cell);min-width:var(--cell);position:relative;border-radius:8px;overflow:hidden;background:#000;aspect-ratio:1006/1564;cursor:zoom-in;outline:2px solid transparent;outline-offset:-2px}
+.cell img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;transition:opacity .15s}
+.cell img.model{opacity:0;object-fit:cover}
+.cell:hover img.model,.cell.wrist img.model{opacity:1}
+.cell.eff-star{outline-color:var(--gold)}
+.cell.eff-strike{outline-color:var(--red)}
+.cell.eff-strike img{filter:grayscale(.85) brightness(.55)}
+.cell .x{position:absolute;inset:0;display:none;align-items:center;justify-content:center;pointer-events:none}
+.cell.eff-strike .x{display:flex}
+.cell .x:before{content:"";position:absolute;left:8%;right:8%;top:50%;height:4px;background:var(--red);transform:rotate(-38deg);border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.4)}
+.cell .x:after{content:"";position:absolute;left:8%;right:8%;top:50%;height:4px;background:var(--red);transform:rotate(38deg);border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.4)}
+.cell .tools{position:absolute;left:6px;right:6px;bottom:6px;display:flex;justify-content:space-between;align-items:flex-end;opacity:0;transition:opacity .12s}
+.cell:hover .tools,.cell.touch .tools{opacity:1}
+.cell .tools .mkgroup .mk{background:rgba(20,18,14,.85)}
+.cell .origin{position:absolute;top:6px;left:6px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:rgba(0,0,0,.65);padding:2px 6px;border-radius:6px;color:var(--muted);display:none}
+.cell.inherit .origin{display:block}
+.cell .flagstar{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:11px;background:var(--gold);color:#221b05;display:none;align-items:center;justify-content:center;font-size:13px}
+.cell.eff-star .flagstar{display:flex}
+.cell .wristbtn{background:rgba(20,18,14,.85);border:1px solid var(--line);color:var(--muted);border-radius:12px;padding:2px 8px;font-size:11px}
+.cell .wristbtn.on{color:var(--gold2)}
+.cell .hasnote{position:absolute;bottom:40px;right:8px;font-size:11px;background:rgba(0,0,0,.65);padding:2px 6px;border-radius:6px;color:var(--gold2)}
+@media (hover:none){.cell .tools{opacity:1}}
+@media (max-width:700px){:root{--cell:120px}.top .nav a{margin-right:10px}}
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:50;display:none;flex-direction:column}
+.lb.open{display:flex}
+.lb .bar{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.lb .bar .t{font-weight:600}
+.lb .bar .s{color:var(--muted);font-size:13px}
+.lb .bar .close{margin-left:auto;background:none;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:6px 12px}
+.lb .imgs{flex:1;display:flex;gap:10px;padding:10px;min-height:0;justify-content:center;align-items:center}
+.lb .imgs img{max-height:100%;max-width:100%;object-fit:contain;border-radius:8px;background:#000}
+.lb .imgs .p{flex:0 1 auto;height:100%;display:flex;align-items:center}
+.lb .imgs .m{flex:0 1 auto;height:100%;display:flex;align-items:center}
+.lb .foot{display:flex;gap:10px;align-items:center;padding:10px 14px;border-top:1px solid var(--line);flex-wrap:wrap}
+.lb .foot .note{flex:1;min-width:200px;min-height:36px}
+.lb .navbtn{background:none;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:6px 10px}
+.lb .hint{color:var(--muted);font-size:12px}
+@media (max-width:900px){.lb .imgs{flex-direction:column;overflow:auto;align-items:center}.lb .imgs .p,.lb .imgs .m{height:auto;max-height:70vh}.lb .imgs img{max-height:70vh}}
+/* results */
+.rev{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:14px}
+.rev table{border-collapse:collapse;width:100%;font-size:13px}
+.rev td,.rev th{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left}
+.rev input{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:6px 10px;font:inherit}
+.btn{background:var(--gold);color:#221b05;border:none;border-radius:8px;padding:7px 12px;font-weight:600}
+.btn.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--line);font-weight:500}
+.rgrid{display:grid;grid-template-columns:150px repeat(var(--ncol),minmax(78px,1fr));gap:4px;font-size:12px;align-items:stretch}
+.rgrid .h{color:var(--muted);text-align:center;padding:4px 2px;font-size:11px}
+.rgrid .rh{color:var(--muted);padding:6px 4px;font-size:11px}
+.rgrid .rc{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:5px 4px;min-height:44px;text-align:center;line-height:1.3;position:relative;cursor:pointer}
+.rgrid .rc.win{border-color:var(--gold);background:#2a2410}
+.rgrid .rc.lose{border-color:var(--red);background:#2b1512}
+.rgrid .rc .n{font-size:13px}
+.rgrid .rc .n b{color:var(--gold2)} .rgrid .rc .n i{color:var(--red2);font-style:normal}
+.rgrid .rc .dots{margin-top:3px;display:flex;gap:2px;justify-content:center;flex-wrap:wrap}
+.dot{display:inline-block;width:14px;height:14px;border-radius:7px;font-size:9px;line-height:14px;text-align:center;color:#111;font-weight:700}
+.dot.s{background:var(--gold)} .dot.x{background:var(--red);color:#fff} .dot.o{background:#3a352e;color:var(--muted)}
+.tabs{display:flex;gap:6px;margin:10px 0 14px;flex-wrap:wrap}
+.tabs button{background:var(--panel2);border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:6px 12px;font-size:13px}
+.tabs button.on{color:var(--text);border-color:var(--gold);}
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.sum .box{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.sum h4{margin:0 0 8px;font-size:13px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.05em}
+.sum ol{margin:0;padding-left:20px}
+.sum li{margin:2px 0}
+.err{padding:40px 20px;text-align:center;color:var(--muted)}
+.err h2{color:var(--text)}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--line);padding:8px 14px;border-radius:20px;font-size:13px;z-index:60;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+.saving{color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>Alfares Watch Review</h1>
+  <span class="nav" id="nav"></span>
+  <span class="who" id="who"></span>
+</div>
+<div class="wrap" id="app"><div class="err">Loading…</div></div>
+<div class="lb" id="lb"></div>
+<div class="toast" id="toast"></div>
+<script>
+const SB='https://kdcusvfpykigkmyqwbvg.supabase.co';
+const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtkY3VzdmZweWtpZ2tteXF3YnZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2MzcwOTUsImV4cCI6MjEwNjIxMzA5NX0.zkL31ox2HCvWBBo2RFJmkEKJ2S3XUlpT8NWFbHJvDCc';
+const IMG=SB+'/storage/v1/object/public/catalogue/img/';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let TOKEN=null, ME=null, MAN=null, MARKS=new Map(), ALL=null, REVIEWERS=null;
+const mkey=(c,s,t)=>c+'|'+s+'|'+(t||'');
+
+async function rpc(fn,args){
+  const r=await fetch(SB+'/rest/v1/rpc/'+fn,{method:'POST',headers:{'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'},body:JSON.stringify(args)});
+  if(!r.ok){const t=await r.text();throw new Error(fn+': '+r.status+' '+t)}
+  const t=await r.text(); return t?JSON.parse(t):null;
+}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),1600)}
+
+async function boot(){
+  const u=new URL(location.href);
+  let saved=null; try{saved=localStorage.getItem('alf_token')}catch(e){}
+  TOKEN=u.searchParams.get('r')||saved;
+  if(!TOKEN){return fail('This page needs a personal review link.','Ask Khaled for your link — it looks like …/review?r=your-name-xxxx')}
+  let info;
+  try{info=await rpc('reviewer_info',{p_token:TOKEN})}catch(e){return fail('Could not reach the review server.',e.message)}
+  if(!info||!info.length){try{localStorage.removeItem('alf_token')}catch(e){};return fail('This review link is not valid.','Ask Khaled for a fresh link.')}
+  ME=info[0]; try{localStorage.setItem('alf_token',TOKEN)}catch(e){}
+  if(u.searchParams.get('r')){try{u.searchParams.delete('r');history.replaceState(null,'',u.pathname+(u.search||'')+u.hash)}catch(e){}}
+  $('#who').textContent='Reviewing as '+ME.name;
+  const [man,marks]=await Promise.all([fetch(SB+'/storage/v1/object/public/catalogue/manifest.json').then(r=>r.json()),rpc('my_marks',{p_token:TOKEN})]);
+  MAN=man; for(const m of marks) MARKS.set(mkey(m.collection,m.scope,m.target),m);
+  for(const c of MAN.collections){c.byId={};for(const x of c.cells)c.byId[x.id]=x;
+    c.cols=[];for(const x of c.cells){if(x.row<=5&&x.colour&&!c.cols[x.col])c.cols[x.col]=x.colour}
+    for(const x of c.cells){if(!c.cols[x.col])c.cols[x.col]=x.colour||('Col '+x.col)}
+    c.rowsUsed=[...new Set(c.cells.map(x=>x.row))].sort((a,b)=>a-b);
+    c.ncol=Math.max(...c.cells.map(x=>x.col));
+  }
+  $('#nav').innerHTML='<a href="#/">All collections</a>'+(ME.is_admin?'<a href="#/results">Results</a>':'');
+  window.addEventListener('hashchange',route); route();
+}
+function fail(h,p){$('#app').innerHTML='<div class="err"><h2>'+esc(h)+'</h2><p>'+esc(p)+'</p></div>'}
+
+function route(){
+  closeLb();
+  const h=location.hash||'#/';
+  if(h.startsWith('#/c/')) renderCollection(decodeURIComponent(h.slice(4)));
+  else if(h==='#/results'&&ME.is_admin) renderResults();
+  else renderIndex();
+  window.scrollTo(0,0);
+}
+
+/* ---------- marks ---------- */
+function getMark(c,s,t){const m=MARKS.get(mkey(c,s,t));return m?m.mark:null}
+function getNote(c,s,t){const m=MARKS.get(mkey(c,s,t));return m?m.note:null}
+/* simpler, explicit save used by the UI */
+async function save(c,s,t,mark,note){
+  const k=mkey(c,s,t);
+  if(!mark){ MARKS.delete(k); }
+  else MARKS.set(k,{collection:c,scope:s,target:t||'',mark,note:note??null});
+  try{ await rpc('set_mark',{p_token:TOKEN,p_collection:c,p_scope:s,p_target:t||'',p_mark:mark||'',p_note:note??null}); }
+  catch(e){toast('Could not save — check connection');console.error(e)}
+}
+function toggle(c,s,t,which){
+  const cur=getMark(c,s,t); const note=getNote(c,s,t);
+  const next=cur===which?null:which;
+  save(c,s,t,next,note);
+  return next;
+}
+/* effective mark for a cell: cell > row > column > collection */
+function effective(ckey,cell,marksMap){
+  const g=(s,t)=>{const m=marksMap.get(mkey(ckey,s,t));return m?m.mark:null};
+  let m=g('cell',cell.id); if(m) return {mark:m,from:'cell'};
+  m=g('row',String(cell.row)); if(m) return {mark:m,from:'strap'};
+  m=g('col',String(cell.col)); if(m) return {mark:m,from:'colour'};
+  m=g('collection',''); if(m) return {mark:m,from:'collection'};
+  return {mark:null,from:null};
+}
+function mkBtns(c,s,t,small){
+  const cur=getMark(c,s,t);
+  return '<span class="mkgroup" data-c="'+esc(c)+'" data-s="'+s+'" data-t="'+esc(t||'')+'">'
+   +'<button class="mk star'+(small?' small':'')+(cur==='star'?' on':'')+'" data-m="star" title="Star (winner)">★</button>'
+   +'<button class="mk strike'+(small?' small':'')+(cur==='strike'?' on':'')+'" data-m="strike" title="Cross out (loser)">✕</button></span>';
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.mk'); if(!b) return;
+  const g=b.closest('.mkgroup'); if(!g||!g.dataset.c) return;
+  e.preventDefault(); e.stopPropagation();
+  const next=toggle(g.dataset.c,g.dataset.s,g.dataset.t,b.dataset.m);
+  g.querySelectorAll('.mk').forEach(x=>x.classList.toggle('on',x.dataset.m===next));
+  refreshAfterMark(g.dataset.c);
+});
+function refreshAfterMark(ckey){
+  const h=location.hash||'#/';
+  if(h.startsWith('#/c/')) paintGrid(ckey); else if(h==='#/') renderIndex();
+  if($('#lb').classList.contains('open')) paintLbMarks();
+}
+function counts(ckey){
+  let s=0,x=0; const c=MAN.collections.find(c=>c.key===ckey);
+  for(const cell of c.cells){const e=effective(ckey,cell,MARKS); if(e.mark==='star')s++; else if(e.mark==='strike')x++}
+  return {s,x};
+}
+
+/* ---------- index ---------- */
+function renderIndex(){
+  let h='<div class="legend"><span>Tap a collection to open its strap × colour grid.</span><span><b>★</b> star = winner</span><span><b>✕</b> cross = loser</span><span>Leave anything blank to stay undecided.</span></div><div class="cards">';
+  for(const c of MAN.collections){
+    const cm=getMark(c.key,'collection',''); const k=counts(c.key);
+    const cover=c.cells[0]?IMG+c.key+'/'+c.cells[0].id+'/product-t.webp':'';
+    h+='<div class="card'+(cm==='star'?' starred':cm==='strike'?' struck':'')+'"><a href="#/c/'+encodeURIComponent(c.key)+'"><img class="img" loading="lazy" src="'+cover+'" alt=""></a><span class="badge">#'+c.rank+'</span>'
+     +'<div class="body"><div class="rank">'+esc(c.metal)+(c.tier?' · Tier '+c.tier:'')+'</div><a href="#/c/'+encodeURIComponent(c.key)+'"><div class="name">'+esc(c.name)+'</div></a>'
+     +'<div class="foot"><span class="stat">'+(k.s||k.x?(k.s+' ★ · '+k.x+' ✕'):'not reviewed yet')+'</span>'+mkBtns(c.key,'collection','',true)+'</div></div></div>';
+  }
+  $('#app').innerHTML=h+'</div>';
+}
+
+/* ---------- collection grid ---------- */
+let CUR=null;
+function renderCollection(key){
+  const c=MAN.collections.find(c=>c.key===key); if(!c) return renderIndex();
+  CUR=c;
+  const idx=MAN.collections.indexOf(c); const prev=MAN.collections[idx-1], next=MAN.collections[idx+1];
+  let h='<div class="chead"><div><h2>#'+c.rank+' · '+esc(c.name)+'</h2><div class="sub">'+esc(c.metal)+(c.tier_label?' · '+esc(c.tier_label):'')+'</div></div>'
+   +'<div class="cmark"><span class="sub">Whole collection:</span>'+mkBtns(key,'collection','')+'</div></div>'
+   +'<div class="legend"><span>Hover (or tap <b>wrist</b>) to see it worn.</span><span>Click an image to enlarge.</span><span>Star/cross a <b>strap row</b> or a <b>colour column</b> to mark the whole line; a mark on a single watch overrides it.</span></div>'
+   +'<textarea class="note" id="cnote" placeholder="Optional note about this collection…">'+esc(getNote(key,'collection','')||'')+'</textarea>'
+   +'<div class="gridwrap" style="margin-top:10px"><table class="grid"><thead><tr><th class="corner"></th>';
+  for(let col=1;col<=c.ncol;col++){
+    h+='<th data-col="'+col+'"><span class="lbl">'+esc(c.cols[col]||'')+'</span>'+mkBtns(key,'col',String(col),true)+'<span class="cnt"></span></th>';
+  }
+  h+='</tr></thead><tbody>';
+  for(const row of c.rowsUsed){
+    const cells=c.cells.filter(x=>x.row===row).sort((a,b)=>a.col-b.col);
+    h+='<tr><th class="rowh" data-row="'+row+'"><span class="lbl">'+esc(cells[0].strap)+'</span>'+mkBtns(key,'row',String(row),true)+'<span class="cnt"></span></th>';
+    let col=1;
+    for(const x of cells){
+      while(col<x.col){h+='<td></td>';col++}
+      const base=IMG+key+'/'+x.id+'/';
+      const label=(x.colour&&x.colour!==c.cols[x.col])?x.colour:'';
+      h+='<td><div class="cell" data-id="'+x.id+'" title="'+esc(x.strap+' · '+(x.colour||''))+'"><img loading="lazy" src="'+base+'product-t.webp" alt=""><img loading="lazy" class="model" src="'+base+'model-t.webp" alt=""><div class="x"></div><span class="origin"></span><span class="flagstar">★</span><span class="hasnote" style="display:none">note</span>'
+        +'<div class="tools">'+mkBtns(key,'cell',x.id,true)+'<button class="wristbtn" type="button">wrist</button></div>'
+        +(label?'<span class="origin" style="display:block;top:auto;bottom:40px;left:6px">'+esc(label)+'</span>':'')+'</div></td>';
+      col++;
+    }
+    while(col<=c.ncol){h+='<td></td>';col++}
+    h+='</tr>';
+  }
+  h+='</tbody></table></div>';
+  h+='<div class="chead" style="margin-top:14px"><span class="sub">'+(prev?'<a href="#/c/'+encodeURIComponent(prev.key)+'">← #'+prev.rank+' '+esc(prev.name)+'</a>':'')+'</span><span class="sub" style="margin-left:auto">'+(next?'<a href="#/c/'+encodeURIComponent(next.key)+'">#'+next.rank+' '+esc(next.name)+' →</a>':'')+'</span></div>';
+  $('#app').innerHTML=h;
+  paintGrid(key);
+  let nt; $('#cnote').addEventListener('input',e=>{clearTimeout(nt);nt=setTimeout(()=>{const m=getMark(key,'collection','');save(key,'collection','',m||'star',e.target.value||null);if(!m){document.querySelectorAll('.mkgroup[data-s="collection"] .mk[data-m="star"]').forEach(b=>b.classList.add('on'))}toast('Note saved')},700)});
+  $('#app').addEventListener('click',e=>{
+    const w=e.target.closest('.wristbtn'); if(w){e.stopPropagation();const cell=w.closest('.cell');cell.classList.toggle('wrist');w.classList.toggle('on');return}
+    const cell=e.target.closest('.cell'); if(cell&&!e.target.closest('.tools')) openLb(cell.dataset.id);
+  });
+}
+function paintGrid(key){
+  const c=MAN.collections.find(c=>c.key===key); if(!c||CUR!==c) return;
+  document.querySelectorAll('.cell').forEach(el=>{
+    const x=c.byId[el.dataset.id]; const e=effective(key,x,MARKS);
+    el.classList.toggle('eff-star',e.mark==='star'); el.classList.toggle('eff-strike',e.mark==='strike');
+    el.classList.toggle('inherit',!!e.mark&&e.from!=='cell');
+    el.querySelector('.origin').textContent=e.from&&e.from!=='cell'?'via '+e.from:'';
+    el.querySelector('.hasnote').style.display=getNote(key,'cell',x.id)?'block':'none';
+    const own=getMark(key,'cell',x.id); el.querySelectorAll('.tools .mk').forEach(b=>b.classList.toggle('on',b.dataset.m===own));
+  });
+  document.querySelectorAll('th[data-col]').forEach(th=>{const col=+th.dataset.col;const m=getMark(key,'col',String(col));th.classList.toggle('starred',m==='star');th.classList.toggle('struck',m==='strike');
+    let s=0,x=0;for(const cell of c.cells){if(cell.col!==col)continue;const e=effective(key,cell,MARKS);if(e.mark==='star')s++;else if(e.mark==='strike')x++}th.querySelector('.cnt').textContent=(s||x)?(s+'★ '+x+'✕'):'';
+    th.querySelectorAll('.mk').forEach(b=>b.classList.toggle('on',b.dataset.m===m))});
+  document.querySelectorAll('th[data-row]').forEach(th=>{const row=+th.dataset.row;const m=getMark(key,'row',String(row));th.classList.toggle('starred',m==='star');th.classList.toggle('struck',m==='strike');
+    let s=0,x=0;for(const cell of c.cells){if(cell.row!==row)continue;const e=effective(key,cell,MARKS);if(e.mark==='star')s++;else if(e.mark==='strike')x++}th.querySelector('.cnt').textContent=(s||x)?(s+'★ '+x+'✕'):'';
+    th.querySelectorAll('.mk').forEach(b=>b.classList.toggle('on',b.dataset.m===m))});
+  const cm=getMark(key,'collection',''); document.querySelectorAll('.cmark .mk').forEach(b=>b.classList.toggle('on',b.dataset.m===cm));
+}
+
+/* ---------- lightbox ---------- */
+let LBID=null;
+function openLb(id){
+  const c=CUR; const x=c.byId[id]; if(!x) return; LBID=id;
+  const base=IMG+c.key+'/'+id+'/';
+  $('#lb').innerHTML='<div class="bar"><span class="t">'+esc(c.name)+'</span><span class="s">'+esc(x.strap)+' · '+esc(x.colour||'')+' · cell '+id+'</span><button class="close" id="lbclose">Close ✕</button></div>'
+   +'<div class="imgs"><div class="p"><img src="'+base+'product.webp" alt=""></div><div class="m"><img src="'+base+'model.webp" alt=""></div></div>'
+   +'<div class="foot"><button class="navbtn" id="lbprev">←</button><button class="navbtn" id="lbnext">→</button><span id="lbmarks">'+mkBtns(c.key,'cell',id)+'</span><span class="saving" id="lbeff"></span><textarea class="note" id="lbnote" placeholder="Note on this watch (optional)…">'+esc(getNote(c.key,'cell',id)||'')+'</textarea><span class="hint">← → next/previous · S star · X cross · Esc close</span></div>';
+  $('#lb').classList.add('open'); document.body.style.overflow='hidden';
+  $('#lbclose').onclick=closeLb; $('#lbprev').onclick=()=>stepLb(-1); $('#lbnext').onclick=()=>stepLb(1);
+  let nt; $('#lbnote').addEventListener('input',e=>{clearTimeout(nt);nt=setTimeout(()=>{const m=getMark(c.key,'cell',id);save(c.key,'cell',id,m||'star',e.target.value||null);paintLbMarks();paintGrid(c.key);toast('Note saved')},700)});
+  paintLbMarks();
+}
+function paintLbMarks(){
+  if(!LBID||!CUR) return; const x=CUR.byId[LBID]; const e=effective(CUR.key,x,MARKS); const own=getMark(CUR.key,'cell',LBID);
+  $('#lbmarks').innerHTML=mkBtns(CUR.key,'cell',LBID);
+  $('#lbeff').textContent=e.mark&&e.from!=='cell'?('currently '+(e.mark==='star'?'★ starred':'✕ crossed')+' via the '+e.from):(own?'':'no mark');
+}
+function stepLb(d){
+  const cells=CUR.cells; const i=cells.findIndex(x=>x.id===LBID); const n=cells[i+d]; if(n) openLb(n.id);
+}
+function closeLb(){$('#lb').classList.remove('open');document.body.style.overflow='';LBID=null}
+document.addEventListener('keydown',e=>{
+  if(!$('#lb').classList.contains('open')) return;
+  if(e.target.tagName==='TEXTAREA') return;
+  if(e.key==='Escape') closeLb(); else if(e.key==='ArrowRight') stepLb(1); else if(e.key==='ArrowLeft') stepLb(-1);
+  else if(e.key.toLowerCase()==='s'||e.key.toLowerCase()==='x'){const which=e.key.toLowerCase()==='s'?'star':'strike';toggle(CUR.key,'cell',LBID,which);paintLbMarks();paintGrid(CUR.key)}
+});
+
+/* ---------- results (admin) ---------- */
+let RTAB='summary';
+async function renderResults(){
+  $('#app').innerHTML='<div class="err">Loading results…</div>';
+  try{[REVIEWERS,ALL]=await Promise.all([rpc('list_reviewers',{p_admin:TOKEN}),rpc('all_marks',{p_admin:TOKEN})])}catch(e){return fail('Could not load results',e.message)}
+  const per=new Map(); for(const r of REVIEWERS) per.set(r.token,new Map());
+  for(const m of ALL){ if(!per.has(m.reviewer_token)) per.set(m.reviewer_token,new Map()); per.get(m.reviewer_token).set(mkey(m.collection,m.scope,m.target),m) }
+  const base=location.origin+location.pathname;
+  let h='<div class="rev"><h3 style="margin:0 0 8px">Reviewers</h3><table><tr><th>Name</th><th>Marks</th><th>Last activity</th><th>Link</th></tr>';
+  for(const r of REVIEWERS){h+='<tr><td>'+esc(r.name)+(r.is_admin?' <span class="saving">(admin)</span>':'')+'</td><td>'+r.mark_count+'</td><td>'+(r.last_activity?new Date(r.last_activity).toLocaleString():'—')+'</td><td><button class="btn ghost copy" data-link="'+esc(base+'?r='+r.token)+'">Copy link</button></td></tr>'}
+  h+='</table><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><input id="newname" placeholder="New reviewer name"><button class="btn" id="addrev">Create link</button><button class="btn ghost" id="csv">Download CSV</button></div></div>';
+  h+='<div class="tabs"><button data-t="summary"'+(RTAB==='summary'?' class="on"':'')+'>Summary</button>';
+  for(const c of MAN.collections) h+='<button data-t="'+esc(c.key)+'"'+(RTAB===c.key?' class="on"':'')+'>#'+c.rank+' '+esc(c.name)+'</button>';
+  h+='</div><div id="rbody"></div>';
+  $('#app').innerHTML=h;
+  $('#app').querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{RTAB=b.dataset.t;$('#app').querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));paintResults(per)});
+  $('#app').querySelectorAll('.copy').forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.link);toast('Link copied')}catch{prompt('Copy this link:',b.dataset.link)}});
+  $('#addrev').onclick=async()=>{const n=$('#newname').value.trim();if(!n)return;try{const t=await rpc('add_reviewer',{p_admin:TOKEN,p_name:n});toast('Created');renderResults();setTimeout(()=>{try{navigator.clipboard.writeText(base+'?r='+t)}catch{}},300)}catch(e){toast('Could not create')}};
+  $('#csv').onclick=()=>downloadCsv(per);
+  paintResults(per);
+}
+function effAll(per){ // returns map cellKey -> [{name, mark, from}]
+  const out=new Map();
+  for(const c of MAN.collections) for(const x of c.cells){
+    const arr=[]; for(const r of REVIEWERS){ if(r.is_admin&&!per.get(r.token)?.size) continue; const e=effective(c.key,x,per.get(r.token)||new Map()); arr.push({name:r.name,token:r.token,...e}) }
+    out.set(c.key+'|'+x.id,arr);
+  }
+  return out;
+}
+function paintResults(per){
+  const body=$('#rbody'); const E=effAll(per); const revs=REVIEWERS.filter(r=>!(r.is_admin&&!per.get(r.token)?.size));
+  const ini=n=>n.split(/\s+/).map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  if(RTAB==='summary'){
+    const colScore=new Map(), strapScore=new Map(), colourScore=new Map(), cellScore=[];
+    for(const c of MAN.collections){
+      let cs=0,cx=0;
+      for(const x of c.cells){const arr=E.get(c.key+'|'+x.id);const s=arr.filter(a=>a.mark==='star').length,xx=arr.filter(a=>a.mark==='strike').length;cs+=s;cx+=xx;
+        const st=strapScore.get(x.strap)||{s:0,x:0};st.s+=s;st.x+=xx;strapScore.set(x.strap,st);
+        if(x.colour){const cl=colourScore.get(x.colour)||{s:0,x:0};cl.s+=s;cl.x+=xx;colourScore.set(x.colour,cl)}
+        if(s||xx) cellScore.push({c,x,s,xx});
+      }
+      colScore.set(c,{s:cs,x:cx, whole:revs.map(r=>{const m=per.get(r.token)?.get(mkey(c.key,'collection',''));return m?m.mark:null})});
+    }
+    const list=(m,key)=>[...m.entries()].filter(([k,v])=>v.s||v.x).sort((a,b)=>(b[1].s-b[1].x)-(a[1].s-a[1].x)).slice(0,12).map(([k,v])=>'<li>'+esc(key?key(k):k)+' <span class="saving">'+v.s+'★ '+v.x+'✕</span></li>').join('');
+    let h='<div class="sum"><div class="box"><h4>Collections — net score (stars minus crosses, all reviewers)</h4><ol>'+list(colScore,c=>'#'+c.rank+' '+c.name+' ('+c.metal+')')+'</ol></div>'
+      +'<div class="box"><h4>Strap types</h4><ol>'+list(strapScore)+'</ol></div>'
+      +'<div class="box"><h4>Colours</h4><ol>'+list(colourScore)+'</ol></div>'
+      +'<div class="box"><h4>Most-starred single watches</h4><ol>'+cellScore.sort((a,b)=>(b.s-b.xx)-(a.s-a.xx)).slice(0,15).map(o=>'<li><a href="#/c/'+encodeURIComponent(o.c.key)+'">#'+o.c.rank+' '+esc(o.c.name)+'</a> · '+esc(o.x.strap)+' · '+esc(o.x.colour||'')+' <span class="saving">'+o.s+'★ '+o.xx+'✕</span></li>').join('')+'</ol></div></div>';
+    h+='<div class="rev" style="margin-top:14px"><h3 style="margin:0 0 8px">Whole-collection verdicts</h3><table><tr><th>Collection</th>'+revs.map(r=>'<th>'+esc(ini(r.name))+'</th>').join('')+'<th>Cells ★/✕</th></tr>';
+    for(const [c,v] of colScore){h+='<tr><td><a href="#/c/'+encodeURIComponent(c.key)+'">#'+c.rank+' '+esc(c.name)+'</a> <span class="saving">'+esc(c.metal)+'</span></td>'+v.whole.map(m=>'<td>'+(m==='star'?'<span class="dot s">★</span>':m==='strike'?'<span class="dot x">✕</span>':'<span class="dot o">·</span>')+'</td>').join('')+'<td>'+v.s+'★ '+v.x+'✕</td></tr>'}
+    h+='</table><p class="saving">Initials: '+revs.map(r=>ini(r.name)+' = '+esc(r.name)).join(' · ')+'</p></div>';
+    body.innerHTML=h; return;
+  }
+  const c=MAN.collections.find(c=>c.key===RTAB); if(!c){body.innerHTML='';return}
+  let h='<div class="rev"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><b>#'+c.rank+' '+esc(c.name)+'</b> <span class="saving">'+esc(c.metal)+'</span><a href="#/c/'+encodeURIComponent(c.key)+'" style="margin-left:auto">Open grid →</a></div>';
+  h+='<div class="rgrid" style="--ncol:'+c.ncol+'"><div class="rh"></div>';
+  for(let col=1;col<=c.ncol;col++) h+='<div class="h">'+esc(c.cols[col]||'')+'</div>';
+  for(const row of c.rowsUsed){
+    const cells=c.cells.filter(x=>x.row===row).sort((a,b)=>a.col-b.col);
+    h+='<div class="rh">'+esc(cells[0].strap)+'</div>';
+    let col=1;
+    for(const x of cells){ while(col<x.col){h+='<div></div>';col++}
+      const arr=E.get(c.key+'|'+x.id); const s=arr.filter(a=>a.mark==='star').length, xx=arr.filter(a=>a.mark==='strike').length;
+      h+='<div class="rc'+(s>xx&&s?' win':xx>s?' lose':'')+'" data-id="'+x.id+'" title="'+esc(arr.map(a=>a.name+': '+(a.mark||'—')+(a.from&&a.from!=='cell'?' (via '+a.from+')':'')).join('\n'))+'"><div class="n"><b>'+s+'★</b> <i>'+xx+'✕</i></div><div class="dots">'+arr.map(a=>'<span class="dot '+(a.mark==='star'?'s':a.mark==='strike'?'x':'o')+'">'+esc(ini(a.name))+'</span>').join('')+'</div></div>';
+      col++; }
+    while(col<=c.ncol){h+='<div></div>';col++}
+  }
+  h+='</div><p class="saving" style="margin-top:8px">Hover a cell for each reviewer\'s verdict. Initials: '+revs.map(r=>ini(r.name)+' = '+esc(r.name)).join(' · ')+'</p>';
+  const notes=ALL.filter(m=>m.collection===c.key&&m.note);
+  if(notes.length){h+='<h4 style="margin:12px 0 6px">Notes</h4><ul>'+notes.map(m=>'<li><b>'+esc(m.reviewer)+'</b> on '+(m.scope==='cell'?'cell '+m.target:m.scope==='collection'?'the collection':m.scope+' '+m.target)+': '+esc(m.note)+'</li>').join('')+'</ul>'}
+  h+='</div>';
+  body.innerHTML=h;
+  body.querySelectorAll('.rc').forEach(el=>el.onclick=()=>{CUR=c;location.hash='#/c/'+encodeURIComponent(c.key);setTimeout(()=>openLb(el.dataset.id),50)});
+}
+function downloadCsv(per){
+  const E=effAll(per); const rows=[['rank','collection','metal','cell','strap','colour','reviewer','mark','via','note']];
+  for(const c of MAN.collections) for(const x of c.cells) for(const a of E.get(c.key+'|'+x.id)){
+    const note=(per.get(a.token)?.get(mkey(c.key,'cell',x.id))||{}).note||'';
+    rows.push([c.rank,c.name,c.metal,x.id,x.strap,x.colour||'',a.name,a.mark||'',a.from||'',note]);
+  }
+  const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='alfares-watch-review.csv'; a.click();
+}
+boot();
+</script>
+</body>
+</html>
