@@ -186,7 +186,7 @@ th.starred .lbl{color:var(--gold2)} th.struck .lbl{color:var(--red2);text-decora
 const SB='https://kdcusvfpykigkmyqwbvg.supabase.co';
 const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtkY3VzdmZweWtpZ2tteXF3YnZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2MzcwOTUsImV4cCI6MjEwNjIxMzA5NX0.zkL31ox2HCvWBBo2RFJmkEKJ2S3XUlpT8NWFbHJvDCc';
 const IMG=SB+'/storage/v1/object/public/catalogue/img/';
-const HERO='assets/hero.mp4'; // set to '' to hide the banner
+const HERO=''; // set to 'assets/hero.mp4' to show the video banner
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let TOKEN=null, ME=null, MAN=null, MARKS=new Map(), ALL=null, REVIEWERS=null, COMMENTS=[], ALLC=[];
